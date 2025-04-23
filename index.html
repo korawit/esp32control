@@ -38,6 +38,11 @@
     const errorMessage = document.getElementById("errorMessage");
     const authContainer = document.getElementById("authContainer");
 
+    // Get references for new textbox and send button
+    const messageInput = document.getElementById("messageInput");
+    const sendMessageButton = document.getElementById("sendMessageButton");
+    const displayedMessage = document.getElementById("displayedMessage");
+
     // Handle login
     loginButton.addEventListener("click", async () => {
       const email = emailInput.value;
@@ -51,6 +56,9 @@
           const uid = user.uid;
           console.log("User ID: ", uid);
           authContainer.style.display = "none"; // Hide login form
+          appContainer.style.display = "block"; // Show app content
+          listenToLEDChanges(); // Start listening to Firebase data
+          listenToMessage(); // Start listening to messages
           // ...
         });
        
@@ -70,6 +78,47 @@
       }
     });
 
+    // Function to listen for LED state and number updates
+    function listenToLEDChanges() {
+      // Listen to LED status (LED/1)
+      onValue(ref(database, `LED/1`), (snapshot) => {
+        const value = snapshot.val();
+        ledStatus.innerText = `LED Status: ${value ? "ON" : "OFF"}`;
+      });
+
+      // Listen to number value (LED/2)
+      onValue(ref(database, 'LED/2'), (snapshot) => {
+        const value = snapshot.val();
+        numberValue.innerText = `Number: ${value}`;
+      });
+    }
+
+    // Function to toggle LED state in Firebase
+    toggleButton.addEventListener("click", () => {
+      const currentState = ledStatus.innerText === "LED Status: ON";
+      const newState = !currentState;
+      
+      // Update Firebase with the new state (true or false)
+      set(ref(database, 'LED/1'), newState);
+    });
+
+    // Function to send message to Firebase
+    sendMessageButton.addEventListener("click", () => {
+      const message = messageInput.value;
+      if (message) {
+        // Update Firebase with the new message
+        set(ref(database, 'msg'), message);
+        messageInput.value = ''; // Clear the input field
+      }
+    });
+
+    // Function to listen for message updates from Firebase
+    function listenToMessage() {
+      onValue(ref(database, 'msg'), (snapshot) => {
+        const message = snapshot.val();
+        displayedMessage.innerText = `Message: ${message || "No message yet"}`;
+      });
+    }
   </script>
 
   <style>
