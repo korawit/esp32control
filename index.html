@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Auth with Email and Password!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f3f4f6;
+    }
+    .container {
+      text-align: center;
+    }
+    .btn {
+      font-size: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+    }
+    .input-field {
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+    }
+    .message {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+    .number {
+      font-size: 36px;
+      margin-top: 20px;
+      padding: 10px;
+    }
+    .text-box {
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Firebase Auth and Toggle</h1>
+    
+    <!-- Login Form -->
+    <div id="authContainer">
+      <h2>Login</h2>
+      <input type="email" id="email" class="input-field" placeholder="Email" required>
+      <input type="password" id="password" class="input-field" placeholder="Password" required>
+      <button class="btn" id="loginButton">Login</button>
+      <p id="errorMessage" class="message"></p>
+    </div>
+
+  </div>
+</body>
+</html>
